@@ -1,8 +1,9 @@
 // import-sort-ignore
-import React from "react";
+import React, { Component } from "react";
 import { Player } from "bitmovin-player/modules/bitmovinplayer-core";
 import EngineBitmovinModule from "bitmovin-player/modules/bitmovinplayer-engine-bitmovin";
 import MseRendererModule from "bitmovin-player/modules/bitmovinplayer-mserenderer";
+
 import HlsModule from "bitmovin-player/modules/bitmovinplayer-hls";
 import DashModule from "bitmovin-player/modules/bitmovinplayer-dash";
 import AbrModule from "bitmovin-player/modules/bitmovinplayer-abr";
@@ -16,27 +17,18 @@ import StyleModule from "bitmovin-player/modules/bitmovinplayer-style";
 import { UIFactory } from "bitmovin-player/bitmovinplayer-ui";
 import "bitmovin-player/bitmovinplayer-ui.css";
 
-class BitmovinPlayer extends React.Component {
-  state = {
-    player: null,
-  };
-
+class BitmovinPlayer extends Component {
   playerConfig = {
-    key: "YOUR KEY HERE",
-  };
-
-  playerSource = {
-    dash:
-      "https://bitdash-a.akamaihd.net/content/MI201109210084_1/mpds/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.mpd",
-    hls:
-      "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8",
-    poster:
-      "https://bitdash-a.akamaihd.net/content/MI201109210084_1/poster.jpg",
+    key: process.env.NEXT_PUBLIC_BITMOVIN_KEY,
   };
 
   constructor(props) {
     super(props);
     this.playerDiv = React.createRef();
+    this.state = {
+      player: null,
+      source: props.source,
+    };
   }
 
   componentDidMount() {
@@ -63,7 +55,7 @@ class BitmovinPlayer extends React.Component {
 
     const player = new Player(this.playerDiv.current, this.playerConfig);
     UIFactory.buildDefaultUI(player);
-    player.load(this.playerSource).then(
+    player.load(this.state.source).then(
       () => {
         this.setState({
           ...this.state,
