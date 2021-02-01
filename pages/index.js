@@ -1,3 +1,4 @@
+import BitmovinPlayer from '../components/BitmovinPlayer'
 import Head from 'next/head'
 
 export default function Home() {
@@ -10,6 +11,17 @@ export default function Home() {
 
       <main>
         <h1>hello, world</h1>
+        <div className="row">
+          <div className="col-md-4">
+          <BitmovinPlayer />
+          </div>
+          <div className="col-md-4">
+          <BitmovinPlayer />
+          </div>
+          <div className="col-md-4">
+          <BitmovinPlayer />
+          </div>
+        </div>
       </main>
 
     </div>
